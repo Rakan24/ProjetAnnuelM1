@@ -31,11 +31,16 @@
 
       <p class="error" v-if="error">{{ error }}</p>
     </form>
+
+    <!-- Nouveau bouton pour aller à l'inscription -->
+    <button class="register-btn" @click="goToRegister" :disabled="loading">
+      Pas encore de compte ? Inscrivez-vous
+    </button>
   </div>
 </template>
 
 <script>
-import api from '../utils/api'
+import api from '../utils/api.js'
 
 export default {
   data() {
@@ -43,7 +48,7 @@ export default {
       email: '',
       password: '',
       error: null,
-      loading: false
+      loading: false,
     }
   },
   methods: {
@@ -53,19 +58,28 @@ export default {
       try {
         const response = await api.post('/auth/login/', {
           email: this.email,
-          password: this.password
+          password: this.password,
         })
 
+
         const token = response.data.token
+        const isStaff = response.data.is_staff  // 👈 on récupère la bonne valeur
+
         localStorage.setItem('token', token)
+        localStorage.setItem('is_staff', isStaff) // 👈 stocké en local pour savoir si User ou Admin
+
         this.$router.push('/dashboard')
+
       } catch (err) {
-        this.error = "Identifiants incorrects ou erreur serveur."
+        this.error = 'Identifiants incorrects ou erreur serveur.'
       } finally {
         this.loading = false
       }
-    }
-  }
+    },
+    goToRegister() {
+      this.$router.push('/register')
+    },
+  },
 }
 </script>
 
@@ -125,5 +139,22 @@ button:disabled {
   margin-top: 1rem;
   color: red;
   text-align: center;
+}
+
+/* Style spécifique pour le bouton d'inscription */
+.register-btn {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #3b82f6;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.register-btn:disabled {
+  color: #93c5fd;
+  cursor: not-allowed;
 }
 </style>
