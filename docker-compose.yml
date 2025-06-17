@@ -77,7 +77,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:3000"
+    - "3000:3000"  # ✅ Port Vite
     command: npm run dev -- --host
     depends_on:
       - backend
@@ -89,13 +89,16 @@ services:
     build:
       context: ./backend
     container_name: backend
-    command: python manage.py runserver 0.0.0.0:8000
+    command: ["./wait_for_postgres.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
       - ./backend:/app
     ports:
       - "8000:8000"
     env_file:
       - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
     depends_on:
       - db
       - kafka1

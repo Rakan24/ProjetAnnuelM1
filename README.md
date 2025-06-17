@@ -10,16 +10,7 @@
 	docker-compose up --build 
 
 
-3) Puis ouvrir un autre terminal dans le dossier backend : .\venv\Scripts\activate
-
-	Puis : python manage.py runserver
-
-
-
-
 Ensuite on se connecte sur : http://localhost:3000/
-
-
 
 Se connecter avec : 
 
@@ -35,13 +26,3 @@ mail = admin@gmail.com
 
 password = 1234
 
-
-
-
-TODO by Liam :
-
-
-Voir le listing de tous les npm instal ou pip install 
-
-
-Et les ajouter aux fichiers de config pour que ça s'install automatiquement au lancement du projet
