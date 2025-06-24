@@ -36,6 +36,11 @@
     <button class="register-btn" @click="goToRegister" :disabled="loading">
       Pas encore de compte ? Inscrivez-vous
     </button>
+
+    <!-- Nouveau bouton pour réinitialiser le mot de passe -->
+    <button class="reset-btn" @click="goToResetPassword" :disabled="loading">
+      Mot de passe oublié ?
+    </button>
   </div>
 </template>
 
@@ -61,12 +66,11 @@ export default {
           password: this.password,
         })
 
-
         const token = response.data.token
-        const isStaff = response.data.is_staff  // 👈 on récupère la bonne valeur
+        const isStaff = response.data.is_staff
 
         localStorage.setItem('token', token)
-        localStorage.setItem('is_staff', isStaff) // 👈 stocké en local pour savoir si User ou Admin
+        localStorage.setItem('is_staff', isStaff)
 
         this.$router.push('/dashboard')
 
@@ -79,6 +83,9 @@ export default {
     goToRegister() {
       this.$router.push('/register')
     },
+    goToResetPassword() {
+      this.$router.push('/forgot-password')
+    }
   },
 }
 </script>
@@ -141,7 +148,6 @@ button:disabled {
   text-align: center;
 }
 
-/* Style spécifique pour le bouton d'inscription */
 .register-btn {
   margin-top: 1rem;
   background-color: transparent;
@@ -154,6 +160,22 @@ button:disabled {
 }
 
 .register-btn:disabled {
+  color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.reset-btn {
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #3b82f6;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.reset-btn:disabled {
   color: #93c5fd;
   cursor: not-allowed;
 }

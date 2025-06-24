@@ -89,7 +89,11 @@ services:
     build:
       context: ./backend
     container_name: backend
-    command: ["./wait_for_postgres.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    command: >
+      sh -c "
+      ./wait_for_postgres.sh &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/app
     ports:

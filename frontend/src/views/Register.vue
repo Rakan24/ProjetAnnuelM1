@@ -46,14 +46,21 @@ export default {
       this.error = null
       this.success = null
       this.loading = true
+
       try {
         const response = await api.post('/auth/register/', {
           email: this.email,
           password: this.password,
         })
-        this.success = response.data.message
-        // Tu peux rediriger après inscription si tu préfères
-        // this.$router.push('/login')
+
+        // Supposons que le backend renvoie un token à la clé `token`
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token)
+          this.$router.push('/dashboard')  // redirection vers dashboard
+        } else {
+          this.success = "Inscription réussie. Connectez-vous maintenant."
+          // ou tu peux aussi rediriger vers login si pas de token retourné
+        }
       } catch (err) {
         this.error = err.response?.data?.error || 'Erreur serveur'
       } finally {

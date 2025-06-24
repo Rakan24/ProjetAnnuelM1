@@ -1,17 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
-import Register from '../views/Register.vue'  // <-- Import de la page Register
-import Profile from '../views/Profile.vue'  // <-- Import de la page Profile
+import Register from '../views/Register.vue'  // Import de la page Register
+import ForgotPassword from '../views/ForgotPassword.vue'  // Import de la page ForgotPassword
+import ResetPassword from '../views/ResetPassword.vue'    // Import de la page ResetPassword
+import Profile from '../views/Profile.vue'    // Import de la page Profile
+import NotFoundPage from '../views/NotFoundPage.vue'  // Import de la page NotFound
 
 const routes = [
-  { path: '/', redirect: '/login' }, // 👈 redirection automatique
+  { path: '/', redirect: '/login' }, // redirection automatique
   { path: '/login', component: Login },
   { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
   { path: '/register', component: Register },
+  { path: '/forgot-password', component: ForgotPassword },
+  { path: '/reset-password/:token', component: ResetPassword },
   { path: '/profile', component: Profile, meta: { requiresAuth: true } },
-]
 
+  // Route catch-all pour les pages non trouvées (doit être la dernière)
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
+]
 
 const router = createRouter({
   history: createWebHistory(),
