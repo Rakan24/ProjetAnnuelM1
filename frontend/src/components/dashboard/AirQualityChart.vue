@@ -1,6 +1,8 @@
 <template>
-  <div class="w-full h-full" style="position: relative;">
-    <Line :chart-data="chartData" :chart-options="chartOptions" />
+  <div class="w-full h-full relative overflow-visible">
+    <div class="absolute left-0 ml-[-12%] w-[110%] max-w-none" style="top: -3%;">
+      <Line :chart-data="chartData" :chart-options="chartOptions" />
+    </div>
   </div>
 </template>
 

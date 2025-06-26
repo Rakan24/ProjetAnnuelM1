@@ -10,6 +10,10 @@
 	docker-compose up --build 
 
 
+Migrations : (predictions)
+3) docker-compose exec backend python manage.py makemigrations predictions
+docker-compose exec backend python manage.py migrate
+
 Ensuite on se connecte sur : http://localhost:3000/
 
 Se connecter avec : 
@@ -26,3 +30,9 @@ mail = admin@gmail.com
 
 password = 1234
 
+
+
+
+a faire : 
+
+corriger route pour admin et threshold

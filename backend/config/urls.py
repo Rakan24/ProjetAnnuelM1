@@ -20,4 +20,5 @@ from django.urls import path, include  # <-- ajoute include ici
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('users.urls')),  # <-- inclut les urls de users sous /auth/
+    path('predictions/', include('predictions.urls')),
 ]

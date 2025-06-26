@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'rest_framework.authtoken',
+    'predictions',  # 💡 ta nouvelle app pour gérer les seuils, prédictions, etc.
 ]
 
 REST_FRAMEWORK = {
@@ -163,6 +164,5 @@ DEFAULT_FROM_EMAIL = f"BreathWell <{EMAIL_HOST_USER}>"
 
 # Pour debug email (optionnel en dev)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # décommente ça si tu veux juste voir le mail dans la console
-
 
 

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Attente de la DB
 while ! nc -z db 5432; do
   echo "⏳ Attente de la base de données à db:5432..."
   sleep 1

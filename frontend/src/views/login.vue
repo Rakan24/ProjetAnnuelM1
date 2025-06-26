@@ -47,6 +47,23 @@
 <script>
 import api from '../utils/api.js'
 
+// Fonction pour décoder un token JWT sans bibliothèque externe
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    )
+    return JSON.parse(jsonPayload)
+  } catch {
+    return null
+  }
+}
+
 export default {
   data() {
     return {
@@ -60,21 +77,38 @@ export default {
     async handleLogin() {
       this.error = null
       this.loading = true
+
+      console.log("Tentative de login avec :", this.email)
+
       try {
         const response = await api.post('/auth/login/', {
           email: this.email,
           password: this.password,
         })
 
-        const token = response.data.token
-        const isStaff = response.data.is_staff
+        console.log("Réponse API :", response.data)
 
+        const token = response.data.access
+
+        // Stocker le token dans localStorage
         localStorage.setItem('token', token)
-        localStorage.setItem('is_staff', isStaff)
+
+        // Décoder le token pour récupérer les claims
+        const decoded = parseJwt(token)
+        console.log('Token décodé :', decoded)
+
+        if (decoded) {
+          // Stocker is_staff et email dans localStorage (ou dans un store global si tu as)
+          localStorage.setItem('is_staff', decoded.is_staff)
+          localStorage.setItem('email', decoded.email)
+        } else {
+          console.warn("Impossible de décoder le token JWT")
+        }
 
         this.$router.push('/dashboard')
 
       } catch (err) {
+        console.error("Erreur API login :", err)
         this.error = 'Identifiants incorrects ou erreur serveur.'
       } finally {
         this.loading = false
