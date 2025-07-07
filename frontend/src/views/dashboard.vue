@@ -91,7 +91,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card class="col-span-1 lg:col-span-2">
+        <Card class="col-span-1 lg:col-span-2 pb-14">
           <CardHeader>
             <CardTitle>Prévisions qualité de l'air sur 7 jours</CardTitle>
             <CardDescription>Niveaux de pollution pour la semaine à venir</CardDescription>
